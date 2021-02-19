@@ -1,11 +1,13 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Marker, MapContainer, TileLayer } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from "leaflet";
 import { FiX, FiPlus } from "react-icons/fi";
 
 import MapIcon from "../components/mapIcon";
 import Sidebar from "../components/sidebar";
+import PrimaryButton from "../components/primaryButton";
+import Map from "../components/map";
 import api from "../services/api";
 import '../css/pages/create-orphanage.css';
 
@@ -15,18 +17,24 @@ export default function OrphanagesMap() {
 
   const history = useHistory()
   
-  const [position, setPosition] = useState({ lat: -30.2606082, lng: -50.516207 })
+  const [position, setPosition] = useState({ lat: -30.2589999, lng: -50.510507 })
 
   const [name, setName] = useState('')
   const [about, setAbout] = useState('')
   const [instructions, setInstructions] = useState('')
   const [opening_hours, setOpeningHours] = useState('')
+  const [whatsapp, setWhatsapp] = useState('')
   const [open_on_weekends, setOpenOnWeekends] = useState(true)
   const [images, setImages] = useState<File[]>([])
   const [previewImages, setPreviewImages] = useState<string[]>([])
+  let [removeImgIndex, setRemoveImgIndex] = useState(-1)
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+
+    if (images.length === 0) {
+      return alert('Por favor, adicione ao menos uma imagem')
+    }
 
     const { lat, lng } = position
 
@@ -38,14 +46,13 @@ export default function OrphanagesMap() {
     data.append('about', about)
     data.append('instructions', instructions)
     data.append('opening_hours', opening_hours)
+    data.append('whatsapp', whatsapp)
     data.append('open_on_weekends', String(open_on_weekends))
-
     images.forEach(image => {
       data.append('images', image)
     })
 
     await api.post('orphanages', data)
-
     alert('Cadastro realizado com sucesso!')
 
     history.push('/orphanages')
@@ -57,9 +64,7 @@ export default function OrphanagesMap() {
     }
 
     const selectedImages = Array.from(event.target.files)
-
     setImages(selectedImages)
-    console.log(selectedImages)
 
     const selectedImagesPreview = selectedImages.map(image =>{
       return URL.createObjectURL(image)
@@ -67,21 +72,18 @@ export default function OrphanagesMap() {
 
     setPreviewImages(selectedImagesPreview)
   }
-
-  // function removeImage() {
-
-  //   images.splice(0, 1)
-  //   previewImages.splice(0, 1)
-    
-  //   console.log(previewImages)
-  //   console.log(images)
-  // }
   
-  // useEffect(() => {}, );
+  useEffect(() => {
+    images.splice(removeImgIndex, 1)
+    previewImages.splice(removeImgIndex, 1)
+
+    removeImgIndex = -1
+  }, [removeImgIndex]);
   
   // function handleMapClick(event: LeafletMouseEvent) {
   //   console.log(event.latlng)
   //   const { lat, lng } = event.latlng
+    
   //   setPosition({
   //     lat: lat,
   //     lng: lng
@@ -96,36 +98,32 @@ export default function OrphanagesMap() {
         <form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
-
-            <MapContainer zoom={16} 
-                center={[-30.2606082, -50.516207]} 
-                style={{ width: '100%', height: 280 }}
-                // onClick={handleMapClick}
+      
+            <Map style={{ width: '100%', height: 280 }} 
+              // onClick={handleMapClick}
             >
-              <TileLayer url='https://a.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-
               {position.lat !== 0 && <Marker interactive={false} icon={MapIcon} position={[position.lat, position.lng]} />}
-            </MapContainer>
+            </Map>
 
             <div className="input-block">
               <label htmlFor="name">Nome</label>
-              <input id="name" value={name} onChange={event => setName(event.target.value)} />
+              <input id="name" value={name} placeholder="Nome do orfanato" required onChange={event => setName(event.target.value)} />
             </div>
 
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
-              <textarea id="about" value={about} onChange={event => setAbout(event.target.value)} maxLength={300} />
+              <textarea id="about" value={about} placeholder="Descrição do orfanato" required onChange={event => setAbout(event.target.value)} maxLength={300} />
             </div>
 
             <div className="input-block">
               <label htmlFor="images">Fotos</label>
 
               <div className="images-container">
-                {previewImages.map(image => {
+                {previewImages.map((image, index)=> {
                   return (
                     <div key={image} className="uploaded-image">
                       <span 
-                        // onClick={removeImage}
+                        onClick={() => {setRemoveImgIndex(index)}}
                       >
                         <FiX size={24} color="red" />
                       </span>
@@ -148,12 +146,17 @@ export default function OrphanagesMap() {
 
             <div className="input-block">
               <label htmlFor="instructions">Instruções</label>
-              <textarea id="instructions" value={instructions} onChange={event => setInstructions(event.target.value)} />
+              <textarea id="instructions" value={instructions} placeholder="Instruções de atendimento" required onChange={event => setInstructions(event.target.value)} />
             </div>
 
             <div className="input-block">
               <label htmlFor="opening_hours">Horário de Atendimento</label>
-              <input id="opening_hours" value={opening_hours} onChange={event => setOpeningHours(event.target.value)} />
+              <input id="opening_hours" value={opening_hours} placeholder="Ex: Das 9h às 17h" required onChange={event => setOpeningHours(event.target.value)} />
+            </div>
+
+            <div className="input-block">
+              <label htmlFor="whatsapp">Whatsapp para contato</label>
+              <input id="whatsapp" value={whatsapp} placeholder="Ex: 51 98765-4321" required onChange={event => setWhatsapp(event.target.value)} />
             </div>
 
             <div className="input-block">
@@ -166,7 +169,7 @@ export default function OrphanagesMap() {
             </div>
           </fieldset>
 
-          <button type="submit">Confirmar</button>
+          <PrimaryButton type="submit">Confirmar</PrimaryButton>
         </form>
       </main>
     </div>

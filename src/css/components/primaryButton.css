@@ -1,0 +1,27 @@
+button.primary-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 40px;
+
+  background: #37C77F;
+  border-radius: 20px;
+  border: none;
+
+  color: #fff;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: background 100ms
+}
+
+button.primary-button:hover {
+  background: #39d889;
+}
+
+button.primary-button svg {
+  margin-right: 10px;
+}

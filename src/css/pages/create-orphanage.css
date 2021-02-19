@@ -20,6 +20,10 @@ form.create-orphanage-form {
   overflow: hidden;
 }
 
+form.create-orphanage-form ::placeholder {
+  color: #acc0ca;
+}
+
 form.create-orphanage-form .leaflet-container { 
   margin-bottom: 40px;
   border: 1px solid #D3E2E5;

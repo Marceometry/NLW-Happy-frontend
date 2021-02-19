@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FiClock, FiInfo } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { Marker, MapContainer, TileLayer } from "react-leaflet";
 import L from "leaflet";
 
 import mapMarker from "../images/map-marker.svg";
 
-// import PrimaryButton from "../../components/PrimaryButton";
 import Sidebar from "../components/sidebar";
-// import Map from "../../components/Map";
+import PrimaryButton from "../components/primaryButton";
+import Map from "../components/map";
 import api from "../services/api";
 
 import "../css/pages/orphanage.css";
@@ -28,6 +29,7 @@ interface Orphanage {
   about: string;
   instructions: string;
   opening_hours: string;
+  whatsapp: string;
   open_on_weekends: string;
   images: {
     id: number;
@@ -51,6 +53,7 @@ export default function Orphanage() {
   }, [params.id]);
 
   if (!orphanage) {
+    document.title = 'Happy'
     return <p>Carregando...</p>;
   }
 
@@ -82,19 +85,13 @@ export default function Orphanage() {
             <p>{orphanage.about}</p>
 
             <div className="map-container">
-              <MapContainer
+              <Map style={{ width: "100%", height: 280 }}
                 center={[orphanage.lat, orphanage.lng]}
-                zoom={16}
-                style={{ width: "100%", height: 280 }}
               >
-                <TileLayer url='https://a.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
-                <Marker
-                  interactive={false}
-                  icon={MapIcon}
-                  position={[orphanage.lat, orphanage.lng]}
-                />
-              </MapContainer>
+                <Marker interactive={false} icon={MapIcon} position={[orphanage.lat, orphanage.lng]} />
+              </Map>
+
               <footer>
                 <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage.lat},${orphanage.lng}`}>Ver rotas no Google Maps</a>
               </footer>
@@ -119,18 +116,22 @@ export default function Orphanage() {
                   fim de semana
                 </div>
               ) : (
-                <div className="open-on-weekends">
-                  <FiInfo size={32} color="#39CC83" />
+                <div className="open-on-weekends dont-open">
+                  <FiInfo size={32} color="#FF669D" />
                   Não Atendemos <br />
                   fim de semana
                 </div>
               )}
             </div>
 
-            {/* <PrimaryButton type="button">
-              <FaWhatsapp size={20} color="#FFF" />
-              Entrar em contato
-            </PrimaryButton> */}
+            <a href={`https://api.whatsapp.com/send?l=pt_BR&phone=${orphanage.whatsapp}`}
+              target="_blank" rel="noopener noreferrer" 
+            >
+              <PrimaryButton>
+                <FaWhatsapp size={20} color="#FFF" />
+                Entrar em contato
+              </PrimaryButton>
+            </a>
           </div>
         </div>
       </main>
