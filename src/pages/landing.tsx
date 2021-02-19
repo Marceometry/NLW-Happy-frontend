@@ -8,6 +8,8 @@ import logoImg from '../images/logo.svg'
 import { FiArrowRight } from 'react-icons/fi'
 
 function Landing() {
+    document.title = 'Happy'
+
     return (
         <div id="landing">
             <div className="content-wrapper">

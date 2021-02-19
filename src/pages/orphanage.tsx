@@ -54,6 +54,8 @@ export default function Orphanage() {
     return <p>Carregando...</p>;
   }
 
+  document.title = `Happy | ${orphanage.name}`
+  
   return (
     <div id="page-orphanage">
       <Sidebar />

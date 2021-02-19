@@ -26,6 +26,8 @@ interface Orphanage {
 }
 
 function Orphanages() {
+    document.title = 'Happy | Orfanatos'
+
     const [orphanages, setOrphanages] = useState<Orphanage[]>([])
 
     useEffect(() => {

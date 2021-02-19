@@ -11,6 +11,8 @@ import '../css/pages/create-orphanage.css';
 
 
 export default function OrphanagesMap() {
+  document.title = 'Happy | Adicionar Orfanato'
+
   const history = useHistory()
   
   const [position, setPosition] = useState({ lat: -30.2606082, lng: -50.516207 })
