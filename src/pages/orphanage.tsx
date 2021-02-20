@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { Marker, MapContainer, TileLayer } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import L from "leaflet";
 
 import mapMarker from "../images/map-marker.svg";

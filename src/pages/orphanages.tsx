@@ -25,7 +25,7 @@ interface Orphanage {
     name: string
 }
 
-function Orphanages() {
+export default function Orphanages() {
     document.title = 'Happy | Orfanatos'
 
     const [orphanages, setOrphanages] = useState<Orphanage[]>([])
@@ -77,5 +77,3 @@ function Orphanages() {
         </div>
     )
 }
-
-export default Orphanages

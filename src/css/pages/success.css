@@ -1,0 +1,54 @@
+#success {
+    width: 100vw;
+    height: 100vh;
+    background: #37c77f;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#success main {
+    width: 95%;
+    max-width: 914px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#success main .success-message {
+    max-width: 450px;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#success main h1 {
+    font-size: 76px;
+    font-weight: 900;
+    line-height: 70px;
+}
+
+#success main p {
+    max-width: 400px;
+    margin-top: 32px;
+    font-size: 24px;
+    line-height: 34px;
+}
+
+#success .secondary-button {
+    margin-top: 62px;
+    background: #31b272;
+}
+
+#success .secondary-button:hover {
+    background: #3BD689;
+}
+
+#success img {
+    max-width: 48%;
+}

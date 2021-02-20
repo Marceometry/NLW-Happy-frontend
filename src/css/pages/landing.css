@@ -9,7 +9,7 @@
 }
 
 .content-wrapper {
-    width: min(90%, 1100px);
+    width: min(90%, 1300px);
     height: min(90%, 700px);
 
     background: url('../../images/landing.svg') no-repeat 80% center;
@@ -19,6 +19,22 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+}
+
+.logo-location {
+    display: flex;
+}
+
+.logo-location img {
+    margin-right: 80px;
+}
+
+.location {
+    font-size: 24px;
+    line-height: 34px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 #landing main {
@@ -38,17 +54,21 @@
     line-height: 34px;
 }
 
-.location {
+.go-to-login {
     position: absolute;
     right: 0;
-    top: 0;
+}
 
-    font-size: 24px;
-    line-height: 34px;
-    text-align: right;
+#landing .secondary-button {
+    padding: 15px 50px;
+    font-size: 20px;
+    font-weight: 700;
+    background: #12D4E0;
+}
 
-    display: flex;
-    flex-direction: column;
+#landing .secondary-button:hover {
+    color: #15C3D6;
+    background: #96FEFF;
 }
 
 .enter-app {

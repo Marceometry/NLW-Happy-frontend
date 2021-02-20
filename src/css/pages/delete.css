@@ -1,0 +1,63 @@
+#delete {
+    width: 100vw;
+    height: 100vh;
+    background: #ff669d;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#delete main {
+    width: 95%;
+    max-width: 914px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#delete main .delete-message {
+    max-width: 450px;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#delete main h1 {
+    font-size: 76px;
+    font-weight: 900;
+    line-height: 70px;
+}
+
+#delete main p {
+    max-width: 400px;
+    margin-top: 32px;
+    font-size: 24px;
+    line-height: 34px;
+}
+
+.delete-options {
+    margin-top: 62px;
+    display: flex;
+}
+
+#delete .secondary-button {
+    margin: 0 25px;
+    background: #d6487b;
+}
+
+#no:hover {
+    background: #3BD689;
+}
+
+#yes:hover {
+    background: #e21e1e;
+}
+
+#delete img {
+    max-width: 48%;
+}

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { render } from "react-dom";
 import { useHistory } from "react-router-dom";
 import { Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from "leaflet";
@@ -17,7 +18,7 @@ export default function OrphanagesMap() {
 
   const history = useHistory()
   
-  const [position, setPosition] = useState({ lat: -30.2589999, lng: -50.510507 })
+  const [position, setPosition] = useState({ lat: -30.2589999, lng: -50.520207 })
 
   const [name, setName] = useState('')
   const [about, setAbout] = useState('')
@@ -27,7 +28,7 @@ export default function OrphanagesMap() {
   const [open_on_weekends, setOpenOnWeekends] = useState(true)
   const [images, setImages] = useState<File[]>([])
   const [previewImages, setPreviewImages] = useState<string[]>([])
-  let [removeImgIndex, setRemoveImgIndex] = useState(-1)
+  const [removeImgIndex, setRemoveImgIndex] = useState(100)
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -52,10 +53,14 @@ export default function OrphanagesMap() {
       data.append('images', image)
     })
 
-    await api.post('orphanages', data)
-    alert('Cadastro realizado com sucesso!')
+    render(
+      <p>Aguarde...</p>,
+      document.getElementsByClassName('primary-button')[0]
+    )
 
-    history.push('/orphanages')
+    await api.post('orphanages', data)
+
+    history.push('/success')
   }
   
   function handleSelectedImages(event: ChangeEvent<HTMLInputElement>) {
@@ -71,13 +76,43 @@ export default function OrphanagesMap() {
     })
 
     setPreviewImages(selectedImagesPreview)
+
+    setRemoveImgIndex(101)
   }
   
   useEffect(() => {
     images.splice(removeImgIndex, 1)
     previewImages.splice(removeImgIndex, 1)
+    setRemoveImgIndex(100)
 
-    removeImgIndex = -1
+    render(
+      <div>
+        <label htmlFor="images">Fotos</label>
+
+        <div className="images-container">
+          <input multiple onChange={handleSelectedImages} type="file" id="image[]" />
+          
+          <label htmlFor="image[]" className="new-image">
+            <FiPlus size={24} color="#15b6d6" />
+          </label>
+
+          {previewImages.map((image, index)=> {
+            return (
+              <div key={image} className="uploaded-image">
+                <span 
+                  onClick={() => {setRemoveImgIndex(index)}}
+                >
+                  <FiX size={24} color="red" />
+                </span>
+
+                <img src={image} alt={name}/>
+              </div>
+            )
+          })}
+        </div>
+      </div>, 
+      document.getElementById('images-container')
+    )
   }, [removeImgIndex]);
   
   // function handleMapClick(event: LeafletMouseEvent) {
@@ -116,29 +151,11 @@ export default function OrphanagesMap() {
             </div>
 
             <div className="input-block">
-              <label htmlFor="images">Fotos</label>
-
-              <div className="images-container">
-                {previewImages.map((image, index)=> {
-                  return (
-                    <div key={image} className="uploaded-image">
-                      <span 
-                        onClick={() => {setRemoveImgIndex(index)}}
-                      >
-                        <FiX size={24} color="red" />
-                      </span>
-
-                      <img src={image} alt={name}/>
-                    </div>
-                  )})}
-                
-                <label htmlFor="image[]" className="new-image">
-                  <FiPlus size={24} color="#15b6d6" />
-                </label>
-              </div>
-
-              <input multiple onChange={handleSelectedImages} type="file" id="image[]" />
+              <label htmlFor="whatsapp">Whatsapp para contato</label>
+              <input id="whatsapp" value={whatsapp} placeholder="Ex: 51 98765-4321" required onChange={event => setWhatsapp(event.target.value)} />
             </div>
+
+            <div className="input-block" id="images-container"></div>
           </fieldset>
 
           <fieldset>
@@ -152,11 +169,6 @@ export default function OrphanagesMap() {
             <div className="input-block">
               <label htmlFor="opening_hours">Horário de Atendimento</label>
               <input id="opening_hours" value={opening_hours} placeholder="Ex: Das 9h às 17h" required onChange={event => setOpeningHours(event.target.value)} />
-            </div>
-
-            <div className="input-block">
-              <label htmlFor="whatsapp">Whatsapp para contato</label>
-              <input id="whatsapp" value={whatsapp} placeholder="Ex: 51 98765-4321" required onChange={event => setWhatsapp(event.target.value)} />
             </div>
 
             <div className="input-block">

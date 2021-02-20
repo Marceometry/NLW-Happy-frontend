@@ -1,0 +1,18 @@
+.show-orphanages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.show-orphanages svg {
+    padding: 10px;
+    margin: 7px 0;
+    border-radius: 15px;
+    background: #12AFCB;
+    transition: background 100ms;
+}
+
+.show-orphanages svg:hover {
+    background: #17D6EB;
+}
