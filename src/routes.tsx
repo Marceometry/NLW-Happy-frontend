@@ -7,22 +7,22 @@ import Login from './pages/login'
 import Admin from './pages/admin'
 import Success from './pages/success'
 import Delete from './pages/delete'
+import Edit from './pages/edit'
 
-function Routes() {
+export default function Routes() {
     return (
         <BrowserRouter>
           <Switch>
             <Route path='/' exact component={Landing} />
             <Route path='/orphanages' exact component={Orphanages} />
-            <Route path='/orphanages/create' component={CreateOrphanage} />
             <Route path='/orphanages/:id' component={Orphanage} />
+            <Route path='/create-orphanage' component={CreateOrphanage} />
+            <Route path='/success' component={Success} />
             <Route path='/login' component={Login} />
             <Route path='/admin' component={Admin} />
-            <Route path='/success' component={Success} />
-            <Route path='/delete' component={Delete} />
+            <Route path='/delete/:id' component={Delete} />
+            <Route path='/edit/:id' component={Edit} />
           </Switch>
         </BrowserRouter>
     )
 }
-
-export default Routes

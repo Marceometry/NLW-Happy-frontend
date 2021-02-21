@@ -14,16 +14,14 @@ export default function Login() {
 
     function hidePassword() {
         render(
-            <FiEyeOff onClick={showPassword} size={24} color="#8fa7b2" />
-            ,
+            <FiEyeOff onClick={showPassword} size={24} />,
             document.getElementById('eye')
         )
     }
 
     function showPassword() {
         render(
-            <FiEye onClick={hidePassword} size={24} color="#8fa7b2" />
-            ,
+            <FiEye onClick={hidePassword} size={24} />,
             document.getElementById('eye')
         )
     }
@@ -39,31 +37,31 @@ export default function Login() {
                 </div>
             </div>
 
-            <div className="login-block">
-                <Link to="/">
+            <form className="login-block">
+                <Link to="/admin">
                     <FiArrowLeft size={24} color="#15c3d6"/>
                 </Link>
 
-                <div className="login">
+                <fieldset className="login">
                     <h2>Fazer login</h2>
 
                     <div className="input-block">
                         <label htmlFor="email">E-mail</label>
-                        <input id="email" placeholder="seuemail@exemplo.com" required />
+                        <input id="email" type="email" placeholder="seuemail@exemplo.com" required />
                     </div>
 
                     <div className="input-block">
                         <label htmlFor="password">Senha</label>
-                        <input id="password" placeholder="Sua senha" required />
+                        <input id="password" type="password" placeholder="Sua senha" required />
 
                         <div id="eye">
-                            <FiEyeOff onClick={showPassword} size={24} color="#8fa7b2" />
+                            <FiEyeOff onClick={showPassword} size={24} />
                         </div>
                     </div>
 
                     <PrimaryButton type="submit"> Entrar </PrimaryButton>
-                </div>
-            </div>
+                </fieldset>
+            </form>
         </div>
     )
 }

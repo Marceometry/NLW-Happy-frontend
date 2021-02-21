@@ -28,7 +28,7 @@ aside.sidebar {
   
     cursor: pointer;
   
-    transition: background-color 0.2s;
+    transition: background 0.2s;
   
     display: flex;
     justify-content: center;

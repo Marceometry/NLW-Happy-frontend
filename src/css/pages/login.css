@@ -25,7 +25,7 @@
     text-align: center;
 }
 
-.login-block {
+form.login-block {
     width: 45%;
     padding: 0 20px;
     background: #fff;
@@ -35,7 +35,7 @@
     justify-content: center;
 }
 
-.login-block a {
+form.login-block a {
     width: fit-content;
     padding: 12px;
     border-radius: 20px;
@@ -52,30 +52,31 @@
     transition: background 100ms;
 }
 
-.login-block a:hover {
+form.login-block a:hover {
     background: #e0e8eb;
 }
 
-.login {
+fieldset.login {
     width: 80%;
+    border: none;
 }
 
-.login h2 {
+fieldset.login h2 {
     margin-bottom: 40px;
     font-size: 32px;
     color: #5C8599;
 }
 
-.input-block {
+fieldset.login .input-block {
     position: relative;
 }
 
-.input-block label {
+fieldset.login .input-block label {
     color: #8FA7B3;
     line-height: 24px;
 }
   
-.input-block input {
+fieldset.login .input-block input {
     width: 100%;
     height: 64px;
     margin: 10px 0 20px;
@@ -88,11 +89,16 @@
     color: #5C8599;
 }
 
-input::placeholder {
+fieldset.login .input-block input::placeholder {
     color: #acc0ca;
 }
 
-.input-block #eye {
+fieldset.login .input-block input:valid {
+    border: 1px solid #a1e9c5;
+}
+
+fieldset.login .input-block #eye {
+    color: #8fa7b2;
     cursor: pointer;
     position: absolute;
     bottom: 40px;
@@ -103,6 +109,6 @@ input::placeholder {
     justify-content: center;
 }
 
-.input-block svg:hover {
+fieldset.login .input-block svg:hover {
     color: #72909c!important;
 }

@@ -68,16 +68,25 @@ export default function OrphanagesMap() {
       return
     }
 
-    const selectedImages = Array.from(event.target.files)
-    setImages(selectedImages)
+    let selectedImages = Array.from(event.target.files)
 
-    const selectedImagesPreview = selectedImages.map(image =>{
-      return URL.createObjectURL(image)
+    selectedImages.forEach(image => {
+      if (image.type.includes('image')) {
+      
+        setImages(selectedImages)
+
+        const selectedImagesPreview = selectedImages.map(image =>{
+          return URL.createObjectURL(image)
+        })
+
+        setPreviewImages(selectedImagesPreview)
+
+        setRemoveImgIndex(101)
+
+      } else {
+        return alert('Por favor, adicione apenas arquivos de imagem')
+      }
     })
-
-    setPreviewImages(selectedImagesPreview)
-
-    setRemoveImgIndex(101)
   }
   
   useEffect(() => {

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FiArrowLeft, FiAlertCircle } from "react-icons/fi";
-import { Marker, MapContainer, TileLayer } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import L from "leaflet";
 
+import { FiArrowLeft, FiAlertCircle, FiTrash } from "react-icons/fi";
+import { FaMapMarkerAlt } from "react-icons/fa";
+
 import mapMarker from "../images/map-marker.svg";
+import edit from "../images/edit.svg";
 
 import Map from "../components/map";
 import api from "../services/api";
@@ -27,64 +30,86 @@ interface Orphanage {
 }
 
 export default function Admin() {
-  document.title = 'Happy | Gerenciar Orfanatos'
+    document.title = 'Happy | Gerenciar Orfanatos'
+    
+    const [orphanages, setOrphanages] = useState<Orphanage[]>([])
+    const [selector, setSelector] = useState('registered')
 
-  const [orphanages, setOrphanages] = useState<Orphanage[]>([])
+    useEffect(() => {
+        api.get(`admin/${selector}`).then(res => {
+            setOrphanages(res.data)
+        })
+    }, [selector])
 
-  useEffect(() => {
-      api.get('orphanages').then(res => {
-          setOrphanages(res.data)
-      })
-  })
-  
-  return (
-    <div id="page-admin">
-        <aside className="sidebar">
-            <img src={mapMarker} alt=""/>
+    return (
+        <div id="page-admin">
+            <aside className="sidebar">
+                <img src={mapMarker} alt="Happy"/>
 
-            <div className="show-orphanages">
-                <Link to="/">
-                    <FiAlertCircle size={48} color='#fff' />
-                </Link>
+                <div className="show-orphanages">
+                    <Link to="/admin/registered">
+                        <FaMapMarkerAlt size={48} className={selector === 'registered' ? 'active' : ''} onClick={() => {setSelector('registered')}} />
+                    </Link>
 
-                <Link to="/">
-                    <FiAlertCircle size={48} color='#fff' />
-                </Link>
-            </div>
+                    <Link to="/admin/pending">
+                        <FiAlertCircle size={48} className={selector === 'pending' ? 'active' : ''}  onClick={() => {setSelector('pending')}} />
+                    </Link>
+                </div>
 
-            <footer>
-                <button type="button">
-                    <FiArrowLeft size={24} color='#fff' />
-                </button>
-            </footer>
-        </aside>
+                <footer>
+                    <Link to=''>
+                        <FiArrowLeft size={24} color='#fff' />
+                    </Link>
+                </footer>
+            </aside>
 
+            <main>
+                <div id="orphanages-admin">
+                    <header>
+                        <div>
+                            <h1>{selector === 'registered' ? 'Orfanatos Cadastrados' : 'Cadastros Pendentes'}</h1>
 
-        {/* <div id="orphanages-admin">
-            <h1>Orfanatos Cadastrados</h1>
+                            <span>{orphanages.length === 0 ? 'Nenhum orfanato cadastrado :(' 
+                            : orphanages.length === 1 ? '1 Orfanato' : `${orphanages.length} Orfanatos`}</span>
+                        </div>
 
-            <span>3 orfanatos</span>
+                        <hr/>
+                    </header>
 
-            <hr/>
+                    <div id="orphanages-container">
+                        {orphanages.map(orphanage => {
+                            return (
+                                <section key={orphanage.id}>
+                                    <div className="orphanage">
+                                        <div className="map-container">
+                                            <Map interactive={false}
+                                                center={[orphanage.lat, orphanage.lng]}
+                                            >
 
-            <div className="orphanages-container">
+                                                <Marker interactive={false} icon={MapIcon} position={[orphanage.lat, orphanage.lng]} />
+                                            </Map>
+                                        </div>
 
-            </div>
-        </div> */}
+                                        <footer>
+                                            <h2>{orphanage.name}</h2>
 
+                                            <div>
+                                                <Link to={`edit/${orphanage.id}`}>
+                                                    <img src={edit} />
+                                                </Link>
 
-            {/* <div className="map-container">
-              <Map style={{ width: "100%", height: 280 }}
-                center={[orphanage.lat, orphanage.lng]}
-              >
-
-                <Marker interactive={false} icon={MapIcon} position={[orphanage.lat, orphanage.lng]} />
-              </Map>
-
-              <footer>
-                <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${orphanage.lat},${orphanage.lng}`}>Ver rotas no Google Maps</a>
-              </footer>
-            </div> */}
-    </div>
-  );
+                                                <Link to={`delete/${orphanage.id}`}>
+                                                    <FiTrash size={48} className="delete-orphanage" />
+                                                </Link>
+                                            </div>
+                                        </footer>
+                                    </div>
+                                </section>
+                            )
+                        })}
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
 }

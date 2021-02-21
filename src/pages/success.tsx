@@ -7,7 +7,7 @@ import SecondaryButton from '../components/secondaryButton'
 import SuccessImg from '../images/success.svg'
 
 export default function Success() {
-    document.title = 'Happy'
+    document.title = 'Happy | Pronto!'
 
     return (
         <div id="success">    

@@ -9,7 +9,7 @@ interface MapContainerProps extends LeafletMapProps {
 export default function Map({ children, interactive = true, ...props }: MapContainerProps) {
   return (
     <LeafletMap 
-      center={[-30.2606082, -50.520207]} 
+      center={[-30.2606082, -50.516207]} 
       zoom={15} 
       style={{ width: '100%', height: '100%' }}
       dragging={interactive}
