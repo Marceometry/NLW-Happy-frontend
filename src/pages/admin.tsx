@@ -36,7 +36,7 @@ export default function Admin() {
     const [selector, setSelector] = useState('registered')
 
     useEffect(() => {
-        api.get(`admin/${selector}`).then(res => {
+        api.get(`/admin/${selector}`).then(res => {
             setOrphanages(res.data)
         })
     }, [selector])

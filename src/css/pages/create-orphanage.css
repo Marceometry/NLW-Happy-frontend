@@ -5,6 +5,7 @@
 
 #page-create-orphanage main {
   flex: 1;
+  margin-left: 96px;
 }
 
 form.create-orphanage-form {

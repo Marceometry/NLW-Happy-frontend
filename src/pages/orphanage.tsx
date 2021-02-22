@@ -5,22 +5,15 @@ import { FaWhatsapp } from "react-icons/fa";
 import { Marker } from "react-leaflet";
 import L from "leaflet";
 
-import mapMarker from "../images/map-marker.svg";
+import MapIcon from "../components/mapIcon";
 
 import Sidebar from "../components/sidebar";
 import PrimaryButton from "../components/primaryButton";
+import Loading from "../components/loading";
 import Map from "../components/map";
 import api from "../services/api";
 
 import "../css/pages/orphanage.css";
-
-const MapIcon = L.icon({
-  iconUrl: mapMarker,
-
-  iconSize: [58, 68],
-  iconAnchor: [29, 68],
-  popupAnchor: [0, -60],
-});
 
 interface Orphanage {
   lat: number;
@@ -53,8 +46,7 @@ export default function Orphanage() {
   }, [params.id]);
 
   if (!orphanage) {
-    document.title = 'Happy'
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
 
   document.title = `Happy | ${orphanage.name}`
@@ -85,7 +77,7 @@ export default function Orphanage() {
             <p>{orphanage.about}</p>
 
             <div className="map-container">
-              <Map style={{ width: "100%", height: 280 }}
+              <Map style={{ height: 280 }}
                 center={[orphanage.lat, orphanage.lng]}
               >
 

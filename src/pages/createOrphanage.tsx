@@ -13,7 +13,7 @@ import api from "../services/api";
 import '../css/pages/create-orphanage.css';
 
 
-export default function OrphanagesMap() {
+export default function CreateOrphanage() {
   document.title = 'Happy | Adicionar Orfanato'
 
   const history = useHistory()
@@ -142,7 +142,7 @@ export default function OrphanagesMap() {
           <fieldset>
             <legend>Dados</legend>
       
-            <Map style={{ width: '100%', height: 280 }} 
+            <Map style={{ height: 280 }} 
               // onClick={handleMapClick}
             >
               {position.lat !== 0 && <Marker interactive={false} icon={MapIcon} position={[position.lat, position.lng]} />}

@@ -33,7 +33,7 @@ export default function Orphanages() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([])
 
     useEffect(() => {
-        api.get('orphanages').then(res => {
+        api.get('admin/registered').then(res => {
             setOrphanages(res.data)
         })
     })
