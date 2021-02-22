@@ -94,11 +94,11 @@ export default function Admin() {
                                             <h2>{orphanage.name}</h2>
 
                                             <div>
-                                                <Link to={`edit/${orphanage.id}`}>
+                                                <Link to={`/edit/${orphanage.id}`}>
                                                     <img src={edit} />
                                                 </Link>
 
-                                                <Link to={`delete/${orphanage.id}`}>
+                                                <Link to={`/delete/${orphanage.id}`}>
                                                     <FiTrash size={48} className="delete-orphanage" />
                                                 </Link>
                                             </div>

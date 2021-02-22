@@ -3,11 +3,11 @@ import Landing from './pages/landing'
 import Orphanages from './pages/orphanages'
 import Orphanage from './pages/orphanage'
 import CreateOrphanage from './pages/createOrphanage'
+import Success from './pages/success'
 import Login from './pages/login'
 import Admin from './pages/admin'
-import Success from './pages/success'
-import Delete from './pages/delete'
 import Edit from './pages/edit'
+import Delete from './pages/delete'
 
 export default function Routes() {
     return (
@@ -20,8 +20,8 @@ export default function Routes() {
             <Route path='/success' component={Success} />
             <Route path='/login' component={Login} />
             <Route path='/admin' component={Admin} />
-            <Route path='/delete/:id' component={Delete} />
             <Route path='/edit/:id' component={Edit} />
+            <Route path='/delete/:id' component={Delete} />
           </Switch>
         </BrowserRouter>
     )
